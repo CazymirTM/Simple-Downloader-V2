@@ -1,3 +1,5 @@
+# Simple Downloader V2
+
 This app downloads instantly the apps you choosen, for example winrar, directx, etc.
 
 
