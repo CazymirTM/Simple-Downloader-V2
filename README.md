@@ -1,5 +1,6 @@
-# Simple Downloader V2
+# Simple Downloader V2 (Open Source)
 This app downloads instantly the apps you choosen, for example winrar, directx, etc.
+
 [![Download Latest Release](https://img.shields.io/badge/Download-Latest_Release-red?style=for-the-badge&logo=github)](https://github.com/CazymirTM/Simple-Downloader-V2/releases/latest)
 
 This one is made in python too, simple code, uses tkinter, requests etc, thread, simple python stuff
