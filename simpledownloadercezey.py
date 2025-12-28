@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import requests
 
-# ---------- YOUR PROGRAM LIST ----------
+
 PROGRAMS = {
     "WinRAR": "https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-713.exe",
     "CPU-Z": "https://download.cpuid.com/cpu-z/cpu-z_2.16-en.exe",
@@ -27,13 +27,13 @@ def human_size(n: int) -> str:
     return f"{f:.2f} {units[i]}"
 
 
-# ---------- GUI App ----------
+
 class DownloaderApp:
     def __init__(self, master):
         self.master = master
         master.title("Simple Downloader V2 by CeZeY")
 
-        # Program selection
+        
         tk.Label(master, text="Select programs to download:").pack(anchor="w", padx=5, pady=(5, 0))
         self.program_vars = {}
         for name in PROGRAMS.keys():
@@ -42,7 +42,7 @@ class DownloaderApp:
             cb.pack(anchor="w", padx=15)
             self.program_vars[name] = var
 
-        # Output folder
+        
         self.outdir = tk.StringVar(value=str(Path.cwd() / "downloads"))
         tk.Label(master, text="Download folder:").pack(anchor="w", padx=5, pady=(8, 0))
         dir_frame = tk.Frame(master)
@@ -51,15 +51,15 @@ class DownloaderApp:
         self.dir_entry.pack(side="left", fill="x", expand=True)
         tk.Button(dir_frame, text="Browse", command=self.choose_dir).pack(side="right")
 
-        # Start button
+        
         tk.Button(master, text="Download Selected", command=self.start_downloads).pack(pady=8)
 
-        # Progress area
+        
         self.progress_frame = tk.Frame(master)
         self.progress_frame.pack(fill="both", expand=True, padx=5, pady=5)
         self.progress_bars = {}   # {program: (label, progressbar)}
 
-        # Credit label
+        
         credit = tk.Label(master, text="by CeZeY", font=("Segoe UI", 12, "bold italic"), fg="blue")
         credit.pack(side="bottom", pady=(0, 5))
 
@@ -69,12 +69,12 @@ class DownloaderApp:
             self.outdir.set(folder)
 
     def start_downloads(self):
-        # Reset old progress bars
+        
         for widget in self.progress_frame.winfo_children():
             widget.destroy()
         self.progress_bars.clear()
 
-        # Collect selected programs
+        
         selected = [name for name, var in self.program_vars.items() if var.get()]
         if not selected:
             messagebox.showwarning("No selection", "Please select at least one program to download.")
@@ -83,7 +83,7 @@ class DownloaderApp:
         outdir = Path(self.outdir.get())
         outdir.mkdir(parents=True, exist_ok=True)
 
-        # Create progress bars for selected
+        
         for name in selected:
             row = tk.Frame(self.progress_frame)
             row.pack(fill="x", pady=2)
@@ -93,7 +93,7 @@ class DownloaderApp:
             bar.pack(side="left", fill="x", expand=True, padx=5)
             self.progress_bars[name] = (label, bar)
 
-        # Start downloads in background thread
+        
         thread = threading.Thread(target=self.download_all, args=(selected, outdir), daemon=True)
         thread.start()
 
@@ -137,7 +137,7 @@ class DownloaderApp:
                 print(f"Failed {name}: {e}")
 
 
-# ---------- Run ----------
+
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS  
@@ -153,4 +153,5 @@ if __name__ == "__main__":
     root.iconbitmap(icon_path)
 
     app = DownloaderApp(root)
+
     root.mainloop()
